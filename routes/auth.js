@@ -6,14 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-// Initialize Firebase Admin SDK
-const serviceAccount = require('../config/serviceAccount.json');
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
-  });
-}
+
 
 const db = admin.firestore();
 
