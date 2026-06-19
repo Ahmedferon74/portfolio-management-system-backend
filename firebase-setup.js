@@ -4,11 +4,19 @@ const fs = require('fs');
 const path = require('path');
 
 // Initialize Firebase Admin SDK
-const serviceAccount = require('./config/serviceAccount.json');
+// Initialize Firebase Admin SDK
+const serviceAccount = {
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  privateKey: process.env.FIREBASE_PRIVATE_KEY
+    ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+    : undefined,
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+};
+
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
+    databaseURL: process.env.FIREBASE_DATABASE_URL || `https://${process.env.FIREBASE_PROJECT_ID}.firebaseio.com`
   });
 }
 
